@@ -5,12 +5,15 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     Vector3 initialPos;
+    Vector3 initialPlayerPos;
+    [SerializeField] Transform player;
 
     private Rigidbody Rg;
     // Start is called before the first frame update
     void Start()
     {
         initialPos = transform.position;
+        initialPlayerPos = player.position;
         Rg = GetComponent<Rigidbody>();
     }
 
@@ -20,13 +23,14 @@ public class Ball : MonoBehaviour
         if (collision.transform.CompareTag("Wall") || collision.transform.CompareTag("Net"))
         {
             Debug.Log("Hit");
-            Invoke("resetBallPos",1f);
+            Invoke("resetPos",1f);
         }
     }
 
-    void resetBallPos(){
+    void resetPos(){
         Debug.Log("reset");
         Rg.velocity = Vector3.zero;
         transform.position = initialPos;
+        player.position = initialPlayerPos;
     }
 }
